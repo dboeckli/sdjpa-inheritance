@@ -1,41 +1,33 @@
 spring:
   application:
-    name: sdjpa-order-service
+    name: sdjpa-inheritance
 
   docker:
     compose:
-      file: compose-mysql.yaml
-      enabled: true
+      enabled: false
       stop:
         command: down
-      skip:
-        in-tests: false
 
-  sql:
-    init:
-      mode: never
+  datasource:
+    # we are using the h2 in compatible mode with mysql
+    url: jdbc:h2:mem:sdjpa-inheritance-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: password
 
   jpa:
-    database: mysql
+    database: h2
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     defer-datasource-initialization: false
     properties:
       hibernate:
         show_sql: true
         format_sql: true
 
-  flyway:
-    enabled: true
-    user: orderadmin
-    password: password
-    url: jdbc:mysql://localhost:3306/orderservicedb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKey
+  h2:
+    console:
+      enabled: true
 
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/orderservicedb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: orderuser
-    password: password
 
 management:
   health:
@@ -57,9 +49,6 @@ logging:
   level:
     org.zalando.logbook: TRACE
     org.hibernate.orm.jdbc.bind: INFO
-    org.springframework.test.context.transaction: DEBUG
-    org.springframework.transaction: DEBUG
-    org.hibernate.SQL: INFO
 
 logbook:
   filter:

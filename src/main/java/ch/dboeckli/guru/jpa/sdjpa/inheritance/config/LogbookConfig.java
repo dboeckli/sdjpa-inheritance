@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.orderservice.config;
+package ch.dboeckli.guru.jpa.sdjpa.inheritance.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

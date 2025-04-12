@@ -65,6 +65,7 @@ logbook:
   predicate:
     exclude:
       - path: /actuator/health/**
+      - path: /h2-console/*
 
 server:
   port: 8080

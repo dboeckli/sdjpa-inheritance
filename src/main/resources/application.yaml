@@ -13,6 +13,7 @@ spring:
     url: jdbc:h2:mem:sdjpa-inheritance-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: password
+    driver-class-name: org.h2.Driver
 
   jpa:
     database: h2
@@ -27,7 +28,9 @@ spring:
   h2:
     console:
       enabled: true
-
+      path: /h2-console
+      settings:
+        web-allow-others: true
 
 management:
   health:
@@ -65,6 +68,7 @@ logbook:
   predicate:
     exclude:
       - path: /actuator/health/**
+      - path: /h2-console/*
 
 server:
   port: 8080

@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.sdjpa.inheritance.domain;
+package ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.mappedsuperclass;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;

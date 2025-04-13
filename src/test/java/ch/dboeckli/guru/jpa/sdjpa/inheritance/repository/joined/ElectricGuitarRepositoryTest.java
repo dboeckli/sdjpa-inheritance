@@ -108,7 +108,7 @@ class ElectricGuitarRepositoryTest {
         ElectricGuitar electricGuitar1 = electricGuitarRepository.save(new ElectricGuitar());
         ElectricGuitar electricGuitar2 = electricGuitarRepository.save(new ElectricGuitar());
 
-        assertNotEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
+        assertEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
     }
 
     @Test

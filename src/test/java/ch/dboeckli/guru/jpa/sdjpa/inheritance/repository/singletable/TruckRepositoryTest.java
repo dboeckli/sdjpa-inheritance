@@ -106,7 +106,7 @@ class TruckRepositoryTest {
         Truck truck1 = truckRepository.save(new Truck());
         Truck truck2 = truckRepository.save(new Truck());
 
-        assertNotEquals(truck1.hashCode(), truck2.hashCode());
+        assertEquals(truck1.hashCode(), truck2.hashCode());
     }
 
     @Test

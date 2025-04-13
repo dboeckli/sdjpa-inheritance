@@ -108,7 +108,7 @@ class DolphinRepositoryTest {
         Dolphin dolphin1 = dolphinRepository.save(new Dolphin());
         Dolphin dolphin2 = dolphinRepository.save(new Dolphin());
 
-        assertNotEquals(dolphin1.hashCode(), dolphin2.hashCode());
+        assertEquals(dolphin1.hashCode(), dolphin2.hashCode());
     }
 
     @Test

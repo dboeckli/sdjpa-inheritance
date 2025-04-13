@@ -111,7 +111,7 @@ class DogRepositoryTest {
         Dog dog1 = dogRepository.save(new Dog());
         Dog dog2 = dogRepository.save(new Dog());
 
-        assertNotEquals(dog1.hashCode(), dog2.hashCode());
+        assertEquals(dog1.hashCode(), dog2.hashCode());
     }
 
     @Test

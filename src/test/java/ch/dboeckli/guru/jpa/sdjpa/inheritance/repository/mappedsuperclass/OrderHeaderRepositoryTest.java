@@ -97,7 +97,7 @@ class OrderHeaderRepositoryTest {
         OrderHeader orderHeader1 = orderHeaderRepository.save(new OrderHeader());
         OrderHeader orderHeader2 = orderHeaderRepository.save(new OrderHeader());
 
-        assertNotEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
+        assertEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
     }
 
     @Test

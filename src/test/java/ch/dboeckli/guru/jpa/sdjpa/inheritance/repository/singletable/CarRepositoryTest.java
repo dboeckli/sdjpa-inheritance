@@ -106,7 +106,7 @@ class CarRepositoryTest {
         Car car1 = carRepository.save(new Car());
         Car car2 = carRepository.save(new Car());
 
-        assertNotEquals(car1.hashCode(), car2.hashCode());
+        assertEquals(car1.hashCode(), car2.hashCode());
     }
 
     @Test

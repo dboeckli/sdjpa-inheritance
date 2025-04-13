@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository;
+package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.joined;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.ElectricGuitar;
 import lombok.extern.slf4j.Slf4j;

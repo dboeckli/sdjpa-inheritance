@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository;
+package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.singletable;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Truck;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository;
+package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.mappedsuperclass;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.mappedsuperclass.OrderHeader;
 import org.springframework.data.jpa.repository.JpaRepository;

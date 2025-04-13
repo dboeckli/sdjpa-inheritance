@@ -1,7 +1,7 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.bootstrap;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.ElectricGuitar;
-import ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.ElectricGuitarRepository;
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.joined.ElectricGuitarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

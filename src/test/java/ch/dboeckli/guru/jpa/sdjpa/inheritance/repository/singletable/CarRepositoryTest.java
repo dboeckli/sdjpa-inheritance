@@ -1,6 +1,7 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.singletable;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Car;
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Truck;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,28 @@ class CarRepositoryTest {
 
         assertNotEquals(null, car);
         assertNotEquals(new Object(), car);
+    }
+
+    @Test
+    void testEqualsWithSameId() {
+        Car electricGuitar1 = carRepository.save(new Car());
+        Car electricGuitar2 = carRepository.findById(electricGuitar1.getId()).orElseThrow();
+        assertEquals(electricGuitar1, electricGuitar2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        Car car = carRepository.save(new Car());
+        Truck truck = new Truck();
+        truck.setId(car.getId());
+        assertNotEquals(car, truck);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        Car car1 = new Car();
+        Car car2 = new Car();
+        assertNotEquals(car1, car2);
     }
 
     @Test

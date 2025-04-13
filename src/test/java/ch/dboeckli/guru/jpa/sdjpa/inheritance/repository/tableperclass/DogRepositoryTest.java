@@ -1,6 +1,7 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.tableperclass;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.tableperclass.Dog;
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.tableperclass.Dolphin;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,28 @@ class DogRepositoryTest {
 
         assertNotEquals(null, dog);
         assertNotEquals(new Object(), dog);
+    }
+
+    @Test
+    void testEqualsWithSameId() {
+        Dog dog1 = dogRepository.save(new Dog());
+        Dog dog2 = dogRepository.findById(dog1.getId()).orElseThrow();
+        assertEquals(dog1, dog2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        Dog dog = dogRepository.save(new Dog());
+        Dolphin dolphin = new Dolphin();
+        dolphin.setId(dog.getId());
+        assertNotEquals(dog, dolphin);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        Dog dog1 = new Dog();
+        Dog dog2 = new Dog();
+        assertNotEquals(dog1, dog2);
     }
 
     @Test

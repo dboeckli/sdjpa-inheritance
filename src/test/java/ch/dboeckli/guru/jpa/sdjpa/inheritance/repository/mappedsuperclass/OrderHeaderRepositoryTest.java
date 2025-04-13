@@ -1,5 +1,6 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.mappedsuperclass;
 
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.ElectricGuitar;
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.mappedsuperclass.OrderHeader;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,20 @@ class OrderHeaderRepositoryTest {
 
         assertNotEquals(null, orderHeader);
         assertNotEquals(new Object(), orderHeader);
+    }
+
+    @Test
+    void testEqualsWithSameId() {
+        OrderHeader orderHeader1 = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader2 = orderHeaderRepository.findById(orderHeader1.getId()).orElseThrow();
+        assertEquals(orderHeader1, orderHeader2);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        ElectricGuitar electricGuitar1 = new ElectricGuitar();
+        ElectricGuitar electricGuitar2 = new ElectricGuitar();
+        assertNotEquals(electricGuitar1, electricGuitar2);
     }
 
     @Test

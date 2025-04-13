@@ -4,24 +4,9 @@ This repository contains source code examples to support my course Hibernate and
 
 ## Additional Resources
 
-For more information about transactions in database systems and Spring Data JPA, please refer to the following documents in the `doc` folder:
+This project focuses on inheritance in JPA. For more information about inheritance, transactions in database systems, and Spring Data JPA, please refer to the following documents in the `doc` folder:
 
-- [Overview of DB Transactions](doc/OverviewOfDBTransactions.pdf): This document provides a comprehensive overview of database transactions.
-- [Spring Data JPA Transactions](doc/SpringDataJPATransactions.pdf): This guide offers insights into how transactions work specifically with Spring Data JPA.
-
-
-## Docker
-
-Docker Compose file initially use the startup script located in `src/scripts`. These scripts create the database and users.
-
-## Kubernetes
-
-### Generate Config Map for mysql init script
-
-When updating 'src/scripts/init-mysql-mysql.sql', apply the changes to the Kubernetes ConfigMap:
-```bash
-kubectl create configmap mysql-init-script --from-file=init.sql=src/scripts/init-mysql.sql --dry-run=client -o yaml | Out-File -Encoding utf8 k8s/mysql-init-script-configmap.yaml
-```
+- [Inheritance Overview](doc/InheritanceOverview.pdf): This document provides a comprehensive overview of inheritance in JPA.
 
 ### Deployment
 
@@ -40,8 +25,3 @@ Check
 kubectl get deployments -o wide
 kubectl get pods -o wide
 ```
-
-## Running the Application
-1. Choose between h2 or mysql for database schema management. (you can use one of the preconfigured intellij runners)
-2. Start the application with the appropriate profile and properties.
-3. The application will use Docker Compose to start MySQL and apply the database schema changes.

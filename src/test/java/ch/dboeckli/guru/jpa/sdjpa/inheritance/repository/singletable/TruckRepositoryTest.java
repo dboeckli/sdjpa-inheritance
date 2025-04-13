@@ -1,5 +1,6 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.singletable;
 
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Car;
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Truck;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -62,11 +63,58 @@ class TruckRepositoryTest {
     }
 
     @Test
+    void testEqualsWithSameId() {
+        Truck truck1 = truckRepository.save(new Truck());
+        Truck truck2 = truckRepository.findById(truck1.getId()).orElseThrow();
+        assertEquals(truck1, truck2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        Truck truck = truckRepository.save(new Truck());
+        Car car = new Car();
+        car.setId(truck.getId());
+        assertNotEquals(truck, car);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        Truck truck1 = new Truck();
+        Truck truck2 = new Truck();
+        assertNotEquals(truck1, truck2);
+    }
+
+    @Test
     void testHashCodeConsistency() {
         Truck truck = truckRepository.save(new Truck());
         int hashCode1 = truck.hashCode();
         int hashCode2 = truck.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        Truck saved = truckRepository.save(new Truck());
+        Truck truck = truckRepository.findById(saved.getId()).orElseThrow();
+        Truck truckProxy = truckRepository.getReferenceById(saved.getId());
+
+        assertEquals(truck.hashCode(), truckProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Truck truck1 = truckRepository.save(new Truck());
+        Truck truck2 = truckRepository.save(new Truck());
+
+        assertEquals(truck1.hashCode(), truck2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Truck truck1 = new Truck();
+        Truck truck2 = new Truck();
+
+        assertEquals(truck1.hashCode(), truck2.hashCode());
     }
 
 }

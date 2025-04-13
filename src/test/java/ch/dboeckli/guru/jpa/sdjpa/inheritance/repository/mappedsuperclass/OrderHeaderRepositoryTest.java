@@ -62,11 +62,50 @@ class OrderHeaderRepositoryTest {
     }
 
     @Test
+    void testEqualsWithSameId() {
+        OrderHeader orderHeader1 = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader2 = orderHeaderRepository.findById(orderHeader1.getId()).orElseThrow();
+        assertEquals(orderHeader1, orderHeader2);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        OrderHeader orderHeader1 = new OrderHeader();
+        OrderHeader orderHeader2 = new OrderHeader();
+        assertNotEquals(orderHeader1, orderHeader2);
+    }
+
+    @Test
     void testHashCodeConsistency() {
         OrderHeader orderHeader = orderHeaderRepository.save(new OrderHeader());
         int hashCode1 = orderHeader.hashCode();
         int hashCode2 = orderHeader.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        OrderHeader saved = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader = orderHeaderRepository.findById(saved.getId()).orElseThrow();
+        OrderHeader orderHeaderProxy = orderHeaderRepository.getReferenceById(saved.getId());
+
+        assertEquals(orderHeader.hashCode(), orderHeaderProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        OrderHeader orderHeader1 = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader2 = orderHeaderRepository.save(new OrderHeader());
+
+        assertEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        OrderHeader orderHeader1 = new OrderHeader();
+        OrderHeader orderHeader2 = new OrderHeader();
+
+        assertEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
     }
 
 }

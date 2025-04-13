@@ -1,6 +1,7 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.singletable;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Car;
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Truck;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,11 +63,58 @@ class CarRepositoryTest {
     }
 
     @Test
+    void testEqualsWithSameId() {
+        Car car1 = carRepository.save(new Car());
+        Car car2 = carRepository.findById(car1.getId()).orElseThrow();
+        assertEquals(car1, car2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        Car car = carRepository.save(new Car());
+        Truck truck = new Truck();
+        truck.setId(car.getId());
+        assertNotEquals(car, truck);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        Car car1 = new Car();
+        Car car2 = new Car();
+        assertNotEquals(car1, car2);
+    }
+
+    @Test
     void testHashCodeConsistency() {
         Car car = carRepository.save(new Car());
         int hashCode1 = car.hashCode();
         int hashCode2 = car.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        Car saved = carRepository.save(new Car());
+        Car car = carRepository.findById(saved.getId()).orElseThrow();
+        Car carProxy = carRepository.getReferenceById(saved.getId());
+
+        assertEquals(car.hashCode(), carProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Car car1 = carRepository.save(new Car());
+        Car car2 = carRepository.save(new Car());
+
+        assertEquals(car1.hashCode(), car2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        assertEquals(car1.hashCode(), car2.hashCode());
     }
 
 }

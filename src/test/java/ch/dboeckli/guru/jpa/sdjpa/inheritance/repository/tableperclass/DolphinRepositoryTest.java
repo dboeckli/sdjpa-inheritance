@@ -1,5 +1,6 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.tableperclass;
 
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.tableperclass.Dog;
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.tableperclass.Dolphin;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -64,11 +65,58 @@ class DolphinRepositoryTest {
     }
 
     @Test
+    void testEqualsWithSameId() {
+        Dolphin dolphin1 = dolphinRepository.save(new Dolphin());
+        Dolphin dolphin2 = dolphinRepository.findById(dolphin1.getId()).orElseThrow();
+        assertEquals(dolphin1, dolphin2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        Dolphin dolphin = dolphinRepository.save(new Dolphin());
+        Dog dog = new Dog();
+        dog.setId(dolphin.getId());
+        assertNotEquals(dolphin, dog);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        Dolphin dolphin1 = new Dolphin();
+        Dolphin dolphin2 = new Dolphin();
+        assertNotEquals(dolphin1, dolphin2);
+    }
+
+    @Test
     void testHashCodeConsistency() {
         Dolphin dolphin = dolphinRepository.save(new Dolphin());
         int hashCode1 = dolphin.hashCode();
         int hashCode2 = dolphin.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        Dolphin saved = dolphinRepository.save(new Dolphin());
+        Dolphin dolphin = dolphinRepository.findById(saved.getId()).orElseThrow();
+        Dolphin dolphinProxy = dolphinRepository.getReferenceById(saved.getId());
+
+        assertEquals(dolphin.hashCode(), dolphinProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Dolphin dolphin1 = dolphinRepository.save(new Dolphin());
+        Dolphin dolphin2 = dolphinRepository.save(new Dolphin());
+
+        assertEquals(dolphin1.hashCode(), dolphin2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Dolphin dolphin1 = new Dolphin();
+        Dolphin dolphin2 = new Dolphin();
+
+        assertEquals(dolphin1.hashCode(), dolphin2.hashCode());
     }
 
 }

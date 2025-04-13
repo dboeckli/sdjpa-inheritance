@@ -1,6 +1,7 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.joined;
 
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.ElectricGuitar;
+import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.Piano;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +65,57 @@ class ElectricGuitarRepositoryTest {
     }
 
     @Test
+    void testEqualsWithSameId() {
+        ElectricGuitar electricGuitar1 = electricGuitarRepository.save(new ElectricGuitar());
+        ElectricGuitar electricGuitar2 = electricGuitarRepository.findById(electricGuitar1.getId()).orElseThrow();
+        assertEquals(electricGuitar1, electricGuitar2);
+    }
+
+    @Test
+    void testEqualsWithDifferentTypes() {
+        ElectricGuitar electricGuitar = electricGuitarRepository.save(new ElectricGuitar());
+        Piano piano = new Piano();
+        piano.setId(electricGuitar.getId());
+        assertNotEquals(electricGuitar, piano);
+    }
+
+    @Test
+    void testEqualsWithNullId() {
+        ElectricGuitar electricGuitar1 = new ElectricGuitar();
+        ElectricGuitar electricGuitar2 = new ElectricGuitar();
+        assertNotEquals(electricGuitar1, electricGuitar2);
+    }
+
+    @Test
     void testHashCodeConsistency() {
         ElectricGuitar electricGuitar = electricGuitarRepository.save(new ElectricGuitar());
         int hashCode1 = electricGuitar.hashCode();
         int hashCode2 = electricGuitar.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        ElectricGuitar saved = electricGuitarRepository.save(new ElectricGuitar());
+        ElectricGuitar electricGuitar = electricGuitarRepository.findById(saved.getId()).orElseThrow();
+        ElectricGuitar electricGuitarProxy = electricGuitarRepository.getReferenceById(saved.getId());
+
+        assertEquals(electricGuitar.hashCode(), electricGuitarProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        ElectricGuitar electricGuitar1 = electricGuitarRepository.save(new ElectricGuitar());
+        ElectricGuitar electricGuitar2 = electricGuitarRepository.save(new ElectricGuitar());
+
+        assertEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        ElectricGuitar electricGuitar1 = new ElectricGuitar();
+        ElectricGuitar electricGuitar2 = new ElectricGuitar();
+
+        assertEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
     }
 }

@@ -92,4 +92,29 @@ class TruckRepositoryTest {
         assertEquals(hashCode1, hashCode2);
     }
 
+    @Test
+    void testHashCodeWithProxy() {
+        Truck saved = truckRepository.save(new Truck());
+        Truck truck = truckRepository.findById(saved.getId()).orElseThrow();
+        Truck truckProxy = truckRepository.getReferenceById(saved.getId());
+
+        assertEquals(truck.hashCode(), truckProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Truck truck1 = truckRepository.save(new Truck());
+        Truck truck2 = truckRepository.save(new Truck());
+
+        assertNotEquals(truck1.hashCode(), truck2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Truck truck1 = new Truck();
+        Truck truck2 = new Truck();
+
+        assertEquals(truck1.hashCode(), truck2.hashCode());
+    }
+
 }

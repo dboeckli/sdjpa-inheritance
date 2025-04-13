@@ -94,4 +94,29 @@ class DolphinRepositoryTest {
         assertEquals(hashCode1, hashCode2);
     }
 
+    @Test
+    void testHashCodeWithProxy() {
+        Dolphin saved = dolphinRepository.save(new Dolphin());
+        Dolphin dolphin = dolphinRepository.findById(saved.getId()).orElseThrow();
+        Dolphin dolphinProxy = dolphinRepository.getReferenceById(saved.getId());
+
+        assertEquals(dolphin.hashCode(), dolphinProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Dolphin dolphin1 = dolphinRepository.save(new Dolphin());
+        Dolphin dolphin2 = dolphinRepository.save(new Dolphin());
+
+        assertNotEquals(dolphin1.hashCode(), dolphin2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Dolphin dolphin1 = new Dolphin();
+        Dolphin dolphin2 = new Dolphin();
+
+        assertEquals(dolphin1.hashCode(), dolphin2.hashCode());
+    }
+
 }

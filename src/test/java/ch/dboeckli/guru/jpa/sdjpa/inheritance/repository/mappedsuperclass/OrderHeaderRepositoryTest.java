@@ -1,6 +1,5 @@
 package ch.dboeckli.guru.jpa.sdjpa.inheritance.repository.mappedsuperclass;
 
-import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.joined.ElectricGuitar;
 import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.mappedsuperclass.OrderHeader;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -71,9 +70,9 @@ class OrderHeaderRepositoryTest {
 
     @Test
     void testEqualsWithNullId() {
-        ElectricGuitar electricGuitar1 = new ElectricGuitar();
-        ElectricGuitar electricGuitar2 = new ElectricGuitar();
-        assertNotEquals(electricGuitar1, electricGuitar2);
+        OrderHeader orderHeader1 = new OrderHeader();
+        OrderHeader orderHeader2 = new OrderHeader();
+        assertNotEquals(orderHeader1, orderHeader2);
     }
 
     @Test
@@ -82,6 +81,31 @@ class OrderHeaderRepositoryTest {
         int hashCode1 = orderHeader.hashCode();
         int hashCode2 = orderHeader.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        OrderHeader saved = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader = orderHeaderRepository.findById(saved.getId()).orElseThrow();
+        OrderHeader orderHeaderProxy = orderHeaderRepository.getReferenceById(saved.getId());
+
+        assertEquals(orderHeader.hashCode(), orderHeaderProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        OrderHeader orderHeader1 = orderHeaderRepository.save(new OrderHeader());
+        OrderHeader orderHeader2 = orderHeaderRepository.save(new OrderHeader());
+
+        assertNotEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        OrderHeader orderHeader1 = new OrderHeader();
+        OrderHeader orderHeader2 = new OrderHeader();
+
+        assertEquals(orderHeader1.hashCode(), orderHeader2.hashCode());
     }
 
 }

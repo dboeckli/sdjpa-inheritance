@@ -64,9 +64,9 @@ class CarRepositoryTest {
 
     @Test
     void testEqualsWithSameId() {
-        Car electricGuitar1 = carRepository.save(new Car());
-        Car electricGuitar2 = carRepository.findById(electricGuitar1.getId()).orElseThrow();
-        assertEquals(electricGuitar1, electricGuitar2);
+        Car car1 = carRepository.save(new Car());
+        Car car2 = carRepository.findById(car1.getId()).orElseThrow();
+        assertEquals(car1, car2);
     }
 
     @Test
@@ -90,6 +90,31 @@ class CarRepositoryTest {
         int hashCode1 = car.hashCode();
         int hashCode2 = car.hashCode();
         assertEquals(hashCode1, hashCode2);
+    }
+
+    @Test
+    void testHashCodeWithProxy() {
+        Car saved = carRepository.save(new Car());
+        Car car = carRepository.findById(saved.getId()).orElseThrow();
+        Car carProxy = carRepository.getReferenceById(saved.getId());
+
+        assertEquals(car.hashCode(), carProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Car car1 = carRepository.save(new Car());
+        Car car2 = carRepository.save(new Car());
+
+        assertNotEquals(car1.hashCode(), car2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        assertEquals(car1.hashCode(), car2.hashCode());
     }
 
 }

@@ -97,4 +97,29 @@ class DogRepositoryTest {
         assertEquals(hashCode1, hashCode2);
     }
 
+    @Test
+    void testHashCodeWithProxy() {
+        Dog saved = dogRepository.save(new Dog());
+        Dog dog = dogRepository.findById(saved.getId()).orElseThrow();
+        Dog dogProxy = dogRepository.getReferenceById(saved.getId());
+
+        assertEquals(dog.hashCode(), dogProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        Dog dog1 = dogRepository.save(new Dog());
+        Dog dog2 = dogRepository.save(new Dog());
+
+        assertNotEquals(dog1.hashCode(), dog2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        Dog dog1 = new Dog();
+        Dog dog2 = new Dog();
+
+        assertEquals(dog1.hashCode(), dog2.hashCode());
+    }
+
 }

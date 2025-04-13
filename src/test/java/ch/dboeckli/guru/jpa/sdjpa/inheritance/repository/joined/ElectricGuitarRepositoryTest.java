@@ -93,4 +93,29 @@ class ElectricGuitarRepositoryTest {
         int hashCode2 = electricGuitar.hashCode();
         assertEquals(hashCode1, hashCode2);
     }
+
+    @Test
+    void testHashCodeWithProxy() {
+        ElectricGuitar saved = electricGuitarRepository.save(new ElectricGuitar());
+        ElectricGuitar electricGuitar = electricGuitarRepository.findById(saved.getId()).orElseThrow();
+        ElectricGuitar electricGuitarProxy = electricGuitarRepository.getReferenceById(saved.getId());
+
+        assertEquals(electricGuitar.hashCode(), electricGuitarProxy.hashCode());
+    }
+
+    @Test
+    void testHashCodeDifferentObjects() {
+        ElectricGuitar electricGuitar1 = electricGuitarRepository.save(new ElectricGuitar());
+        ElectricGuitar electricGuitar2 = electricGuitarRepository.save(new ElectricGuitar());
+
+        assertNotEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
+    }
+
+    @Test
+    void testHashCodeWithNullId() {
+        ElectricGuitar electricGuitar1 = new ElectricGuitar();
+        ElectricGuitar electricGuitar2 = new ElectricGuitar();
+
+        assertEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
+    }
 }

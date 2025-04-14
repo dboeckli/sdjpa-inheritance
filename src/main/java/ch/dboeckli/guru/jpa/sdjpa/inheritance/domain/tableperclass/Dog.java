@@ -11,6 +11,5 @@ import lombok.ToString;
 @Setter
 public class Dog extends Mammal {
 
-    private String breed;
-
+  private String breed;
 }

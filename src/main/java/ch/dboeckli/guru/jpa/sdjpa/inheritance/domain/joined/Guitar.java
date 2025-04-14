@@ -11,6 +11,5 @@ import lombok.ToString;
 @Setter
 public class Guitar extends Instrument {
 
-    private Integer numberOfStrings;
-
+  private Integer numberOfStrings;
 }

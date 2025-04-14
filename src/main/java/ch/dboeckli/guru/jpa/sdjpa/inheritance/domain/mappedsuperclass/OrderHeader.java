@@ -11,5 +11,5 @@ import lombok.ToString;
 @ToString
 public class OrderHeader extends BaseEntity {
 
-    private String customerName;
+  private String customerName;
 }

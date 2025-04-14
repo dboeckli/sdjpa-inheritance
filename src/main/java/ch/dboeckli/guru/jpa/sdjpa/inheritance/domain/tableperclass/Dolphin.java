@@ -11,6 +11,5 @@ import lombok.ToString;
 @Setter
 public class Dolphin extends Mammal {
 
-    private Boolean hasSpots;
-
+  private Boolean hasSpots;
 }

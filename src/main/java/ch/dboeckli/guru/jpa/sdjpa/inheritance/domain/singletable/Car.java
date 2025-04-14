@@ -13,6 +13,5 @@ import lombok.ToString;
 @Setter
 public class Car extends Vehicle {
 
-    private String trimLevel;
-
+  private String trimLevel;
 }

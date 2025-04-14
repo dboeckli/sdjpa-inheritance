@@ -11,6 +11,5 @@ import lombok.ToString;
 @Setter
 public class Piano extends Instrument {
 
-    private Integer numberOfKeys;
-
+  private Integer numberOfKeys;
 }

@@ -13,6 +13,5 @@ import lombok.ToString;
 @Setter
 public class Truck extends Vehicle {
 
-    private Integer payload;
-
+  private Integer payload;
 }

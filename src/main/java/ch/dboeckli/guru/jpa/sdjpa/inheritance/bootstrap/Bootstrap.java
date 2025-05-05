@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Bootstrap implements CommandLineRunner {
 
-    private final ElectricGuitarRepository electricGuitarRepository;
+  private final ElectricGuitarRepository electricGuitarRepository;
 
-    @Override
-    public void run(String... args) {
-        ElectricGuitar eg = new ElectricGuitar();
-        eg.setNumberOfStrings(6);
-        eg.setNumberOfPickups(2);
-        electricGuitarRepository.save(eg);
-    }
+  @Override
+  public void run(String... args) {
+    ElectricGuitar eg = new ElectricGuitar();
+    eg.setNumberOfStrings(6);
+    eg.setNumberOfPickups(2);
+    electricGuitarRepository.save(eg);
+  }
 }

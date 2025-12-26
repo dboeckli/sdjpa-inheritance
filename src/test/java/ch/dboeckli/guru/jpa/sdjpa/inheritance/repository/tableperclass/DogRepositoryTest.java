@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Slf4j
-
 class DogRepositoryTest {
 
     @Autowired

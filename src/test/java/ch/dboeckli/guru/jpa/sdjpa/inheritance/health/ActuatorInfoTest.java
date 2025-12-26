@@ -23,13 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 class ActuatorInfoTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Autowired
     BuildProperties buildProperties;
-
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     void actuatorInfoTest() throws Exception {

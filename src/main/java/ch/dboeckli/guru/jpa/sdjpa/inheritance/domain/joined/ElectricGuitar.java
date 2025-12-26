@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class ElectricGuitar extends Guitar{
+public class ElectricGuitar extends Guitar {
 
     private Integer numberOfPickups;
 

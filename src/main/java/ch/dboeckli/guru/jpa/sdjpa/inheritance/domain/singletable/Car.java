@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@DiscriminatorValue("car")
+@DiscriminatorValue("CAR")
 @ToString
 @Getter
 @Setter

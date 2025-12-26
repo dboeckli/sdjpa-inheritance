@@ -78,9 +78,10 @@ management:
 logging:
   level:
     org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.tool.schema: DEBUG
     org.springframework.test.context.transaction: DEBUG
     org.springframework.transaction: DEBUG
-    org.hibernate.SQL: INFO
+    org.hibernate.SQL: DEBUG
 
 server:
   port: 8080

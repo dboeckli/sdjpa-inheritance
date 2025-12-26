@@ -26,7 +26,7 @@ class CarRepositoryTest {
 
         Optional<Car> foundCar = carRepository.findById(savedCar.getId());
         assertAll("Car",
-            () -> assertTrue(foundCar.isPresent(), "Electric guitar should be found"),
+            () -> assertTrue(foundCar.isPresent(), "Car should be found"),
             () -> foundCar.ifPresent(presentCar -> {
                 assertNotNull(presentCar.getId(), "ID should not be null");
                 assertEquals("abc", presentCar.getTrimLevel());

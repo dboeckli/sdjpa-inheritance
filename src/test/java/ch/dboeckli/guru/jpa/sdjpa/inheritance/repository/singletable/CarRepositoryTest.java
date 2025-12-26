@@ -5,7 +5,7 @@ import ch.dboeckli.guru.jpa.sdjpa.inheritance.domain.singletable.Truck;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ class CarRepositoryTest {
 
         Optional<Car> foundCar = carRepository.findById(savedCar.getId());
         assertAll("Car",
-            () -> assertTrue(foundCar.isPresent(), "Electric guitar should be found"),
+            () -> assertTrue(foundCar.isPresent(), "Car should be found"),
             () -> foundCar.ifPresent(presentCar -> {
                 assertNotNull(presentCar.getId(), "ID should not be null");
                 assertEquals("abc", presentCar.getTrimLevel());

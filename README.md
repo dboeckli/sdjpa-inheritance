@@ -105,3 +105,71 @@ create busybox sidecar
 kubectl run busybox-test --rm -it --image=busybox:1.36 --namespace=sdjpa-inheritance --command -- sh
 ```
 
+## Sandbox (local dev environment)
+
+The sandbox is provisioned by the opencode-sandbox-kit and runs as a Docker container. It mounts this
+repo, starts the agent, and connects the IntelliJ MCP server. The app runs on port `8080` and uses an
+in-memory H2 database (no Docker service needed).
+
+Allow the kit source (GitHub without cloning):
+
+```powershell
+sbx settings set kit.allowedSources --% "[\"docker.io/\",\"github.com/dboeckli/\"]"
+```
+
+Start a new sandbox:
+
+```powershell
+sbx run opencode `
+    --kit "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
+    --template docker/sandbox-templates:opencode-docker-0.5.0 `
+    --no-share-skills `
+    --static-mcp idea `
+    . `
+    "C:\development\maven-repo:ro"
+```
+
+Start the sandbox with Kubernetes support:
+
+```powershell
+sbx run opencode `
+    --kit "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
+    --template docker/sandbox-templates:opencode-docker-0.5.0 `
+    --no-share-skills `
+    --static-mcp idea `
+    . `
+    "C:\development\maven-repo:ro" `
+    "$env:USERPROFILE\.kube:ro"
+```
+
+Claude Code (Home) and Mammouth Code variants:
+
+```powershell
+sbx run claude `
+    --kit "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=opencode-agent" `
+    --template docker/sandbox-templates:claude-code-docker-0.5.0 `
+    --no-share-skills `
+    --static-mcp idea `
+    . `
+    "C:\development\maven-repo:ro"
+```
+
+```powershell
+sbx run "git+https://github.com/dboeckli/opencode-sandbox-kit.git#dir=mammouth-agent" `
+    --no-share-skills `
+    --static-mcp idea `
+    . `
+    "C:\development\maven-repo:ro"
+```
+
+### Start the app
+
+Run the `Spring6Application h2` run configuration in IntelliJ
+(`.run/Spring6Application h2.run.xml`) or start via `./mvnw spring-boot:run` (H2, no Docker needed).
+
+### Sandbox build quirk
+
+The sandbox mounts the repo via filesystem passthrough, which blocks symlinks — Spotless's `npm install`
+(prettier) would fail with `EPERM` unless npm skips bin links. The kit sets `npm_config_bin_links=false`
+globally, so no manual export is needed.
+

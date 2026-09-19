@@ -26,14 +26,12 @@ class DolphinRepositoryTest {
         Dolphin savedDolphin = dolphinRepository.save(dolphin);
 
         Optional<Dolphin> foundDolphin = dolphinRepository.findById(savedDolphin.getId());
-        assertAll("Dolphin",
-            () -> assertTrue(foundDolphin.isPresent(), "Electric guitar should be found"),
-            () -> foundDolphin.ifPresent(presentDolphin -> {
-                assertNotNull(presentDolphin.getId(), "ID should not be null");
-                assertEquals(37, presentDolphin.getBodyTemp());
-                assertEquals("X", presentDolphin.getSpecies());
-            })
-        );
+        assertAll("Dolphin", () -> assertTrue(foundDolphin.isPresent(), "Electric guitar should be found"),
+                () -> foundDolphin.ifPresent(presentDolphin -> {
+                    assertNotNull(presentDolphin.getId(), "ID should not be null");
+                    assertEquals(37, presentDolphin.getBodyTemp());
+                    assertEquals("X", presentDolphin.getSpecies());
+                }));
     }
 
     @Test

@@ -24,13 +24,11 @@ class OrderHeaderRepositoryTest {
         OrderHeader savedOrderHeader = orderHeaderRepository.save(orderHeader);
 
         Optional<OrderHeader> foundOrderHeader = orderHeaderRepository.findById(savedOrderHeader.getId());
-        assertAll("Order Header",
-            () -> assertTrue(foundOrderHeader.isPresent()),
-            () -> foundOrderHeader.ifPresent(header -> {
-                assertNotNull(header.getId());
-                assertEquals("Pumukel", header.getCustomerName());
-            })
-        );
+        assertAll("Order Header", () -> assertTrue(foundOrderHeader.isPresent()),
+                () -> foundOrderHeader.ifPresent(header -> {
+                    assertNotNull(header.getId());
+                    assertEquals("Pumukel", header.getCustomerName());
+                }));
     }
 
     @Test

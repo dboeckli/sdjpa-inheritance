@@ -27,13 +27,12 @@ class ElectricGuitarRepositoryTest {
 
         Optional<ElectricGuitar> foundElectricGuitar = electricGuitarRepository.findById(savedElectricGuitar.getId());
         assertAll("Electric Guitar",
-            () -> assertTrue(foundElectricGuitar.isPresent(), "Electric guitar should be found"),
-            () -> foundElectricGuitar.ifPresent(guitar -> {
-                assertNotNull(guitar.getId(), "ID should not be null");
-                assertEquals(2, guitar.getNumberOfPickups(), "Number of pickups should be 2");
-                assertEquals(6, guitar.getNumberOfStrings(), "Number of strings should be 6");
-            })
-        );
+                () -> assertTrue(foundElectricGuitar.isPresent(), "Electric guitar should be found"),
+                () -> foundElectricGuitar.ifPresent(guitar -> {
+                    assertNotNull(guitar.getId(), "ID should not be null");
+                    assertEquals(2, guitar.getNumberOfPickups(), "Number of pickups should be 2");
+                    assertEquals(6, guitar.getNumberOfStrings(), "Number of strings should be 6");
+                }));
     }
 
     @Test
@@ -118,4 +117,5 @@ class ElectricGuitarRepositoryTest {
 
         assertEquals(electricGuitar1.hashCode(), electricGuitar2.hashCode());
     }
+
 }

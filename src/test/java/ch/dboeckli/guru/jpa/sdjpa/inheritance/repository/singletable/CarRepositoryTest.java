@@ -25,13 +25,11 @@ class CarRepositoryTest {
         Car savedCar = carRepository.save(car);
 
         Optional<Car> foundCar = carRepository.findById(savedCar.getId());
-        assertAll("Car",
-            () -> assertTrue(foundCar.isPresent(), "Car should be found"),
-            () -> foundCar.ifPresent(presentCar -> {
-                assertNotNull(presentCar.getId(), "ID should not be null");
-                assertEquals("abc", presentCar.getTrimLevel());
-            })
-        );
+        assertAll("Car", () -> assertTrue(foundCar.isPresent(), "Car should be found"),
+                () -> foundCar.ifPresent(presentCar -> {
+                    assertNotNull(presentCar.getId(), "ID should not be null");
+                    assertEquals("abc", presentCar.getTrimLevel());
+                }));
     }
 
     @Test

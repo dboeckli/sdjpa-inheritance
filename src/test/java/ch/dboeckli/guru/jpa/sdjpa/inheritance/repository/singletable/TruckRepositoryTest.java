@@ -25,13 +25,11 @@ class TruckRepositoryTest {
         Truck savedTruck = truckRepository.save(truck);
 
         Optional<Truck> foundTruck = truckRepository.findById(savedTruck.getId());
-        assertAll("Car",
-            () -> assertTrue(foundTruck.isPresent(), "Electric guitar should be found"),
-            () -> foundTruck.ifPresent(presentTruck -> {
-                assertNotNull(presentTruck.getId(), "ID should not be null");
-                assertEquals(999, presentTruck.getPayload());
-            })
-        );
+        assertAll("Car", () -> assertTrue(foundTruck.isPresent(), "Electric guitar should be found"),
+                () -> foundTruck.ifPresent(presentTruck -> {
+                    assertNotNull(presentTruck.getId(), "ID should not be null");
+                    assertEquals(999, presentTruck.getPayload());
+                }));
     }
 
     @Test

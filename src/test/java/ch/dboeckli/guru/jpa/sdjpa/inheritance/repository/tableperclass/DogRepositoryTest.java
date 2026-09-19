@@ -27,15 +27,13 @@ class DogRepositoryTest {
         Dog savedDog = dogRepository.save(dog);
 
         Optional<Dog> foundDog = dogRepository.findById(savedDog.getId());
-        assertAll("Dog",
-            () -> assertTrue(foundDog.isPresent(), "Electric guitar should be found"),
-            () -> foundDog.ifPresent(presentDog -> {
-                assertNotNull(presentDog.getId(), "ID should not be null");
-                assertEquals("abc", presentDog.getBreed());
-                assertEquals(37, presentDog.getBodyTemp());
-                assertEquals("X", presentDog.getSpecies());
-            })
-        );
+        assertAll("Dog", () -> assertTrue(foundDog.isPresent(), "Electric guitar should be found"),
+                () -> foundDog.ifPresent(presentDog -> {
+                    assertNotNull(presentDog.getId(), "ID should not be null");
+                    assertEquals("abc", presentDog.getBreed());
+                    assertEquals(37, presentDog.getBodyTemp());
+                    assertEquals("X", presentDog.getSpecies());
+                }));
     }
 
     @Test

@@ -19,4 +19,5 @@ public class Bootstrap implements CommandLineRunner {
         eg.setNumberOfPickups(2);
         electricGuitarRepository.save(eg);
     }
+
 }
